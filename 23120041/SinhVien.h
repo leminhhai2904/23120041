@@ -14,23 +14,22 @@
 #include <Windows.h>
 #include <codecvt>
 
+#define STATE_MACHINE_0_NAME 0
 
 using namespace std;
 
 struct SinhVien {
-	wstring MSSV;
-	wstring hoTen;
-	wstring khoa;
-	wstring khoaTuyen;
-	wstring ngaySinh;
-	wstring hinhAnh;
-	wstring moTa;
-	wstring amNhac;
-	wstring dienAnh;
+	wstring MSSV = L"";
+	wstring hoTen = L"";
+	wstring khoa = L"";
+	wstring khoaTuyen = L"";
+	wstring ngaySinh = L"";
+	wstring hinhAnh = L"";
+	wstring moTa = L"";
+	wstring amNhac = L"";
+	wstring dienAnh = L"";
 };
 
-vector<SinhVien> readCSV(const wstring& filename);
+vector<SinhVien> readStudentListFromCSV(const wstring& filename);
 
 #endif 
-
-// C:\\Users\\Phuoc\\Documents\\23120041\\23120041\\File\\data.csv
