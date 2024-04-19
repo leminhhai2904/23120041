@@ -32,6 +32,9 @@ void setStudentAttrByIndex(SinhVien& sv, int index, const wstring& value) {
     default:
         break;
     }
+    if (index >= 7) {
+        sv.soThich.push_back(value);
+    }
 }
 
 int readStudentDataFromLine(const wstring& line, SinhVien& sv) {
@@ -42,53 +45,54 @@ int readStudentDataFromLine(const wstring& line, SinhVien& sv) {
     for (auto ptr = line.begin(); ptr < line.end(); ) { // [ATTENTION] We will control the increment manually
         wchar_t chr = *ptr;
         switch (stateMachine) {
-            case 0:
-            {
-                if (chr == L'“' || chr == L'"') {
-                    flag = 1;
-                    stateMachine = 1;
-                }
-                else if (chr == L' ') {// [ATTENTION] Skip the space character
-                    // Do nothing
-                }
-                else {
-                    attributeBuffer += chr;
-                    stateMachine = 1;
-                    flag = 0;// [ATTENTION] Set flag to 0 (Flag maybe be 1 in the previous loop)
-                }
-                ptr++;
+        case 0:
+        {
+            if (chr == L'“' || chr == L'"') {
+                flag = 1;
+                stateMachine = 1;
             }
-            break;
-            case 1:
-            {
-                if ((chr == L'”' || chr == L'"') && flag == 1) {
-                    stateMachine = 2;
-                } else if ((chr == L',' || chr == L'\n') && flag == 0) {
-                    stateMachine = 3;
-                }
-                else {
-                    attributeBuffer += chr;
-                }
-                ptr++;
+            else if (chr == L' ') {// [ATTENTION] Skip the space character
+                // Do nothing
             }
-            break;
-            case 2:
-            {
-                if (chr == L',' || chr == L'\n') {
-                    stateMachine = 3;
-                }
-                ptr++;
+            else {
+                attributeBuffer += chr;
+                stateMachine = 1;
+                flag = 0;// [ATTENTION] Set flag to 0 (Flag maybe be 1 in the previous loop)
             }
-            break;
-            case 3:
-            {
-                setStudentAttrByIndex(sv, attributeIndex, attributeBuffer);
-                stateMachine = 0;
-                attributeIndex++;
-                attributeBuffer = L"";
-                // [ATTENTION] At this step, we just set the attribute to variable, so we should not increment the pointer
+            ptr++;
+        }
+        break;
+        case 1:
+        {
+            if ((chr == L'”' || chr == L'"') && flag == 1) {
+                stateMachine = 2;
             }
-            break;
+            else if ((chr == L',' || chr == L'\n') && flag == 0) {
+                stateMachine = 3;
+            }
+            else {
+                attributeBuffer += chr;
+            }
+            ptr++;
+        }
+        break;
+        case 2:
+        {
+            if (chr == L',' || chr == L'\n') {
+                stateMachine = 3;
+            }
+            ptr++;
+        }
+        break;
+        case 3:
+        {
+            setStudentAttrByIndex(sv, attributeIndex, attributeBuffer);
+            stateMachine = 0;
+            attributeIndex++;
+            attributeBuffer = L"";
+            // [ATTENTION] At this step, we just set the attribute to variable, so we should not increment the pointer
+        }
+        break;
         }
     }
 
@@ -116,7 +120,6 @@ vector<SinhVien> readStudentListFromCSV(const wstring& filename) {
     }
 
     wstring line;
-
     while (getline(file, line)) {
         SinhVien sv;
 

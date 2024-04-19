@@ -28,8 +28,11 @@ struct SinhVien {
 	wstring moTa = L"";
 	wstring amNhac = L"";
 	wstring dienAnh = L"";
+	vector<wstring> soThich;
 };
 
+void setStudentAttrByIndex(SinhVien& sv, int index, const wstring& value);
+int readStudentDataFromLine(const wstring& line, SinhVien& sv);
 vector<SinhVien> readStudentListFromCSV(const wstring& filename);
 
 #endif 

@@ -21,9 +21,15 @@
     <ClCompile Include="SinhVien.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="readWriteHTML.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SinhVien.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="readWriteHTML.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
