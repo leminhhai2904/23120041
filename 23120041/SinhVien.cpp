@@ -23,18 +23,11 @@ void setStudentAttrByIndex(SinhVien& sv, int index, const wstring& value) {
     case 6:
         sv.moTa = value;
         break;
-    case 7:
-        sv.amNhac = value;
-        break;
-    case 8:
-        sv.dienAnh = value;
-        break;
     default:
+        sv.soThich.push_back(value);
         break;
     }
-    if (index >= 7) {
-        sv.soThich.push_back(value);
-    }
+    
 }
 
 int readStudentDataFromLine(const wstring& line, SinhVien& sv) {
@@ -129,4 +122,16 @@ vector<SinhVien> readStudentListFromCSV(const wstring& filename) {
 
     file.close();
     return sinhVien;
+}
+
+void PrintListStudents(vector<SinhVien> data) {
+    int ind = 1;
+    wcout << L"-------------------------------------\n";
+    wcout << L"Danh sách sinh viên:" << endl;
+    for (const auto& sinhVien : data) {
+        wcout << ind << L". " << sinhVien.MSSV << L"_"
+            << sinhVien.hoTen << endl;
+        ind++;
+    }
+    wcout << L"-------------------------------------\n";
 }

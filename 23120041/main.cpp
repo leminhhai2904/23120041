@@ -1,39 +1,53 @@
-﻿#include "SinhVien.h"
+﻿#include "menu.h"
+#include "SinhVien.h"
 #include "readWriteHTML.h"
-
-/*
-    - We should rename "readCSV" to "readStudentListFromCSV" to make it more clear.
-    - We should use English instead of Vietnamese for Student struct and Package.
-*/
 
 int main() {
     _setmode(_fileno(stdin), _O_U16TEXT);
     _setmode(_fileno(stdout), _O_U16TEXT);
 
-    wstring filename = L"File\\data-demo.csv";
-    vector<SinhVien> data = readStudentListFromCSV(filename);
-
-    // In this example, just print out the read data
-/*
-    for (const auto& sinhVien : data) {
-        wcout << L"MSSV: " << sinhVien.MSSV << endl;
-        wcout << L"Họ và tên: " << sinhVien.hoTen << endl;
-        wcout << L"Khoa: " << sinhVien.khoa << endl;
-        wcout << L"khoaTuyen: " << sinhVien.khoaTuyen << endl;
-        wcout << L"ngaySinh: " << sinhVien.ngaySinh << endl;
-        wcout << L"moTa: " << sinhVien.moTa << endl;
-        wcout << L"amNhac: " << sinhVien.amNhac << endl;
-        wcout << L"dienAnh: " << sinhVien.dienAnh << endl;
-        wcout << L"---------------------------------" << endl;
-        for (const auto& soThich : sinhVien.soThich) {
-            wcout << L"" << soThich << endl;
+    wstring filename_data = L"Websites\\Sources\\data.csv";
+    wstring filename_template = L"Websites\\Sources\\Templates\\template";
+    vector<SinhVien> data = readStudentListFromCSV(filename_data);
+    
+    while (true)
+    {
+        Menu();
+        int chon = ChonMenu();
+        switch (chon) {
+        case 1:
+        {
+            ChooseHTMLTemplate(filename_template);
         }
-        wcout << L"---------------------------------" << endl;
-    }
-*/
-    for (const auto& sinhVien : data) {
-        readFileTemplate(sinhVien);
+        break;
+        case 2:
+        {
+            PrintListStudents(data);
+        }
+        break;
+        case 3:
+        {
+            WriteWebsite(data, filename_template);
+        }
+        break;
+        case 4:
+        {
+            system("cls");
+        }
+        break;
+        case 0:
+        {
+            wcout << L"Bạn đã thoát chương trình thành công!\n";
+            return 0;
+        }
+        break;
+        default:
+        {
+            wcout << L"Lựa chọn của bạn không hợp lệ!!\n"
+                << L"Bạn hãy vui lòng chọn lại!\n";
+        }
+        break;
+        }
     }
     return 0;
 }
-
